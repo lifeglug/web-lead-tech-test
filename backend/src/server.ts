@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import http from "http";
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 import cors from "cors";
 import bodyParser from "body-parser";
 
@@ -21,3 +21,9 @@ const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+// Simple root response
+app.use('/', (req: Request, res: Response) => {
+  res.status(200);
+  return res.json({})
+})
