@@ -8,6 +8,7 @@ const ChatTab = () => {
   const currentUser = useUserStore((state) => state.currentUser);
   const currentRecipient = useUserStore((state) => state.currentRecipient);
   const messages = useMessagesStore((state) => state.messages);
+  const createMessage = useMessagesStore((state) => state.createMessage);
 
   const handleMessageSend = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -19,7 +20,8 @@ const ChatTab = () => {
       content: currentMessage.trim(),
     };
 
-    setCurrentMessage("");
+    createMessage(newMessage);
+    setCurrentMessage('');
   };
 
   return (
