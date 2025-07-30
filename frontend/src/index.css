@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+:root {
+    --colour-muzz-primary: #e8506e;
+}

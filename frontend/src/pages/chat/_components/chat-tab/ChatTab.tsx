@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useMessagesStore from "../../../../store/messages.store.ts";
+import useMessagesStore, { type Message } from "../../../../store/messages.store.ts";
 import useUserStore from "../../../../store/user.store.ts";
 import MessageItem from "./_components/message/MessageItem.tsx";
 
@@ -25,20 +25,21 @@ const ChatTab = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col h-screen">
       <div className="flex-1 flex flex-col p-[5px] overflow-auto max-h-[490px]">
         <div className="mt-auto">
-          {messages.map((message) => (
+          {messages.map((message: Message) => (
             <div key={message.timestamp}>
               <MessageItem
                 message={message}
+                currentUserID={currentUser.id}
                 key={message.id}
               />
             </div>
           ))}
         </div>
       </div>
-      <div className="p-[20px] px-[10px]">
+      <div className="p-[20px] px-[10px] sticky bottom-0">
         <form onSubmit={(e) => handleMessageSend(e)} className="flex gap-[10px]">
           <input
             type="text"

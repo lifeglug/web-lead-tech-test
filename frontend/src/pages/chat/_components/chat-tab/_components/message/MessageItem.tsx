@@ -2,11 +2,14 @@ import type { Message } from "../../../../../../store/messages.store.ts";
 
 type MessageProps = {
   message: Message;
+  currentUserID: number;
 };
 
-const MessageItem = ({ message }: MessageProps) => {
+const MessageItem = ({ message, currentUserID }: MessageProps) => {
   return (
-    <div className="rounded-lg px-[10px] py-[4px] text-sm bg-amber-50 m-[8px]">
+    <div className={`rounded-xl p-4 text-m m-2 w-80 ${
+      message.senderId === currentUserID ? 'text-white rounded-br-none ms-auto bg-[var(--colour-muzz-primary)]' : 'rounded-bl-none bg-gray-200'
+    }`}>
       {message.content}
     </div>
   );

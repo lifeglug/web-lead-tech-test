@@ -17,7 +17,7 @@ const Tabs = <T extends string>({ tabs, activeTab, onTabChange }: TabsProps<T>) 
           key={tab.id}
           onClick={() => onTabChange(tab.id)}
           className={`flex-1 text-center cursor-pointer font-semibold border-b-2 border-transparent py-1 transition-all duration-200 ease-in-out ${
-            activeTab === tab.id ? "text-[#e8506e] border-b-[#e8506e]" : ""
+            activeTab === tab.id ? "text-[var(--colour-muzz-primary)] border-b-[var(--colour-muzz-primary)]" : ""
           }`}
         >
           {tab.label}

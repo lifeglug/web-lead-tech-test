@@ -9,8 +9,8 @@ const Button = ({ onClick, children, buttonType, disabled }: ButtonProps) => {
   return (
     <button
       type={buttonType}
-      className={`border-0 rounded-lg bg-[#e8506e] text-white px-2.5 py-1.5 font-semibold cursor-pointer transition-colors duration-200 ease-in-out hover:bg-[#cc3d59] ${
-        disabled ? "opacity-50 cursor-not-allowed hover:bg-[#e8506e]" : ""
+      className={`border-0 rounded-lg bg-[var(--colour-muzz-primary)] text-white px-2.5 py-1.5 font-semibold cursor-pointer transition-colors duration-200 ease-in-out hover:bg-[#cc3d59] ${
+        disabled ? "opacity-50 cursor-not-allowed hover:bg-[--var(--colour-muzz-primary)]" : ""
       }`}
       onClick={onClick}
       disabled={disabled}
