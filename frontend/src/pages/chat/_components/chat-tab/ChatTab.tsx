@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import useMessagesStore, { type Message } from "../../../../store/messages.store.ts";
 import useUserStore from "../../../../store/user.store.ts";
 import MessageItem from "./_components/message/MessageItem.tsx";
+import { SOCKET_EVENTS } from "../../../../ws/events.ts";
+import { socket } from "../../../../ws/socket.ts";
 
 const ChatTab = () => {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -10,6 +13,25 @@ const ChatTab = () => {
   const currentRecipient = useUserStore((state) => state.currentRecipient);
   const messages = useMessagesStore((state) => state.messages);
   const createMessage = useMessagesStore((state) => state.createMessage);
+  const setMessages = useMessagesStore((state) => state.setMessages);
+  const addMessage = useMessagesStore((state) => state.addMessage);
+
+  const { data } = useQuery<Message[]>({
+    queryKey: ["messages"],
+    queryFn: async () => fetch(`/api/messages/${currentUser.id}/${currentRecipient?.id}.json`).then((res) => res.json()),
+  });
+
+  useEffect(() => {
+    if (data) {
+      setMessages(data);
+    }
+  }, [data, setMessages]);
+
+  socket.on(SOCKET_EVENTS.PUSH_CONVERSATION, (resp) => {
+    if (resp.userId === currentUser.id || resp.recipientId === currentRecipient?.id) {
+      addMessage(resp.message);
+    }
+  });
 
   const handleMessageSend = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

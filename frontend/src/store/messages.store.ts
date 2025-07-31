@@ -18,11 +18,21 @@ export type MessageInput = {
 type MessagesState = {
   messages: Message[];
   createMessage: (message: MessageInput) => void;
+  setMessages: (messages: Message[]) => void;
+  addMessage: (message: Message) => void;
 };
 
 const useMessagesStore = create<MessagesState>()((set, get) => ({
   messages: [],
-  createMessage: (message: MessageInput) =>
+  addMessage: (message: Message) => set((state) => {
+    const existingMessage = state.messages.find(m => m.id === message.id);
+    if (existingMessage) {
+      return state;
+    }
+    return { messages: [...state.messages, message] }
+  }),
+  setMessages: (messages: Message[]) => set({ messages }),
+  createMessage: (message: MessageInput) => 
     set((state) => {
       const newMessage: Message = {
         id: state.messages.length + 1,

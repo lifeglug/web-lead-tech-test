@@ -3,7 +3,6 @@ import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { wsConnection } from "./ws";
 
 const app = express();
 const server = http.createServer(app);
@@ -21,4 +20,22 @@ server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-io.on('connection', wsConnection);
+export type Message = {
+    id: number;
+    senderId: number;
+    recipientId: number;
+    content: string;
+    timestamp: string;
+};
+
+const SOCKET_EVENTS = {
+    SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
+    PUSH_CONVERSATION: 'PUSH_CONVERSATION',
+};
+
+io.on('connection', socket => {
+  socket.on(SOCKET_EVENTS.SUBMIT_MESSAGE, (message: Message) => {
+    console.log(message);
+    io.emit(SOCKET_EVENTS.PUSH_CONVERSATION, { userId: message.senderId, recipientId: message.recipientId, message: message });
+  });
+});
