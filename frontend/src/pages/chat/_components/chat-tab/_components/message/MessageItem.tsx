@@ -7,7 +7,7 @@ type MessageProps = {
 
 const MessageItem = ({ message, currentUserID }: MessageProps) => {
   return (
-    <div className={`rounded-xl p-4 text-m m-2 w-80 ${
+    <div className={`rounded-xl p-4 text-m m-2 w-2/3 ${
       message.senderId === currentUserID ? 'text-white rounded-br-none ms-auto bg-[var(--colour-muzz-primary)]' : 'rounded-bl-none bg-gray-200'
     }`}>
       {message.content}

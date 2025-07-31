@@ -3,7 +3,7 @@ import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 import bodyParser from "body-parser";
-
+import { wsConnection } from "./ws";
 
 const app = express();
 const server = http.createServer(app);
@@ -15,15 +15,10 @@ app.use(cors({ origin: "*" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 // Start the server on port 3001
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-// Simple root response
-app.use('/', (req: Request, res: Response) => {
-  res.status(200);
-  return res.json({})
-})
+io.on('connection', wsConnection);
