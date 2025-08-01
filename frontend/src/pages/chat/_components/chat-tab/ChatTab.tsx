@@ -28,7 +28,8 @@ const ChatTab = () => {
   }, [data, setMessages]);
 
   socket.on(SOCKET_EVENTS.PUSH_CONVERSATION, (resp) => {
-    if (resp.userId === currentUser.id || resp.recipientId === currentRecipient?.id) {
+    console.log(resp, currentUser, currentRecipient);
+    if (resp.userId === currentUser.id && resp.recipientId === currentRecipient?.id) {
       addMessage(resp.message);
     }
   });
